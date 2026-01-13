@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}S'inscrire au Webinaire - {{ webinaire.titre }} | Credo Mali{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-24 min-h-[80vh] flex items-center">
+    <div class="container mx-auto px-6">
+        <div class="max-w-2xl mx-auto">
+
+            <!-- Bouton Retour -->
+            <a href="{% url 'webinaires_list' %}"
+                class="inline-flex items-center gap-2 text-[#19429b] font-black uppercase tracking-widest text-[10px] mb-8 hover:text-[#F58634] transition-colors group">
+                <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                Retour aux webinaires
+            </a>
+
+            <!-- Form Card -->
+            <div class="bg-white rounded-[3rem] shadow-2xl shadow-[#19429b]/5 overflow-hidden relative">
+                <!-- Barre Dégradée Signature -->
+                <div
+                    class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#19429b] via-[#F58634] to-[#2ECC71]">
+                </div>
+
+                <div class="p-8 md:p-12">
+                    <div class="mb-10 text-center">
+                        <div
+                            class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-[#19429b] mx-auto mb-6">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h1 class="text-3xl font-black text-[#19429b] uppercase tracking-tighter leading-tight mb-2">
+                            Réserver ma <span class="text-[#F58634]">Place</span>
+                        </h1>
+                        <p class="text-gray-400 font-bold uppercase tracking-widest text-[9px]">
+                            Webinaire : {{ webinaire.titre }}
+                        </p>
+                    </div>
+
+                    <form method="post" class="space-y-6">
+                        {% csrf_token %}
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Nom -->
+                            <div class="space-y-2">
+                                <label for="id_nom"
+                                    class="block text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                                    Nom Complet
+                                </label>
+                                <!-- prettier-ignore -->
+                                {{ form.nom|add_class:"credo-input" }}
+                                {% if form.nom.errors %}
+                                <p class="text-[9px] font-bold text-red-500 mt-1 uppercase">{{ form.nom.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            <!-- Email -->
+                            <div class="space-y-2">
+                                <label for="id_email"
+                                    class="block text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                                    Adresse E-mail
+                                </label>
+                                <!-- prettier-ignore -->
+                                {{ form.email|add_class:"credo-input" }}
+                                {% if form.email.errors %}
+                                <p class="text-[9px] font-bold text-red-500 mt-1 uppercase">{{ form.email.errors.0 }}
+                                </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-6">
+                            <button type="submit"
+                                class="w-full bg-[#19429b] text-white px-8 py-5 rounded-full font-black uppercase tracking-widest hover:bg-[#F58634] shadow-xl shadow-[#19429b]/20 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group">
+                                Confirmer mon Inscription
+                                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <p class="text-[10px] text-center text-gray-400 font-medium italic">
+                            Un email de confirmation vous sera envoyé dès validation.
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

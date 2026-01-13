@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Témoignages & Impact - Credo Mali{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-24">
+  <div class="container mx-auto px-6">
+    <h1 class="text-4xl md:text-5xl font-black text-[#19429b] uppercase tracking-tighter mb-16 text-center">
+      Ils nous font <span class="text-[#F58634]">Confiance</span>
+    </h1>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for t in temoins %}
+      <div class="group h-full">
+        <a href="{% url 'temoignage_detail' t.pk %}"
+          class="block h-full bg-white border border-gray-100 rounded-[2.5rem] p-8 hover:border-[#19429b]/20 hover:shadow-2xl transition-all duration-500 flex flex-col">
+          <div class="flex items-center gap-4 mb-8">
+            {% if t.photo %}
+            <div class="relative shrink-0">
+              <img src="{{ t.photo.url }}" alt="{{ t.nom }}"
+                class="w-16 h-16 object-cover rounded-2xl shadow-inner border-2 border-white">
+              <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-[#2ECC71] border-2 border-white rounded-full"></div>
+            </div>
+            {% else %}
+            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-[#19429b] shrink-0">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            {% endif %}
+            <div class="overflow-hidden">
+              <h3 class="font-black text-[#19429b] uppercase tracking-tighter leading-none mb-1.5 truncate">
+                {{ t.nom }}
+              </h3>
+              {% if t.fonction %}
+              <span
+                class="inline-block px-3 py-1 bg-orange-50 text-[#F58634] text-[9px] font-black uppercase tracking-widest rounded-lg">
+                {{ t.fonction }}
+              </span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="text-gray-600 italic font-medium leading-relaxed mb-6 flex-grow">
+            “{{ t.message|truncatewords:30 }}”
+          </div>
+
+          <div class="pt-6 border-t border-gray-50 flex items-center justify-between mt-auto">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Voir le détail</span>
+            <div
+              class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#19429b] group-hover:bg-[#19429b] group-hover:text-white transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M9 5l7 7-7 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <div class="col-span-full py-20 text-center bg-white rounded-[3rem] border-2 border-dashed border-gray-100">
+        <p class="text-gray-400 font-bold uppercase tracking-widest">Pas encore de témoignages publiés.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Publier un Article - Expertise Blog | Credo Mali{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-24 min-h-[80vh] flex items-center">
+  <div class="container mx-auto px-6">
+    <div class="max-w-3xl mx-auto">
+
+      <!-- Bouton Retour Stylisé -->
+      <a href="{% url 'articles' %}"
+        class="inline-flex items-center gap-2 text-[#19429b] font-black uppercase tracking-widest text-[10px] mb-8 hover:text-[#F58634] transition-colors group">
+        <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Annuler et revenir au blog
+      </a>
+
+      <!-- Form Card -->
+      <div class="bg-white rounded-[3rem] shadow-2xl shadow-[#19429b]/5 overflow-hidden relative">
+        <!-- Barre Dégradée Signature -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#19429b] via-[#F58634] to-[#2ECC71]"></div>
+
+        <div class="p-8 md:p-12">
+          <div class="mb-12">
+            <h1 class="text-3xl md:text-4xl font-black text-[#19429b] uppercase tracking-tighter leading-tight mb-4">
+              Nouvel <span class="text-[#F58634]">Article</span>
+            </h1>
+            <p class="text-gray-500 font-bold uppercase tracking-widest text-[10px]">
+              Partagez votre expertise avec la communauté Credo Mali
+            </p>
+          </div>
+
+          <form method="post" enctype="multipart/form-data" class="space-y-8">
+            {% csrf_token %}
+
+            <!-- Champ Titre -->
+            <div class="space-y-3">
+              <label for="id_titre" class="block text-[11px] font-black uppercase tracking-widest text-gray-400">
+                Titre de l'expertise
+              </label>
+              <div class="relative group">
+                <!-- prettier-ignore -->
+                {{ form.titre|add_class:"credo-input" }}
+              </div>
+            </div>
+
+            <!-- Champ Contenu -->
+            <div class="space-y-3">
+              <label for="id_contenu" class="block text-[11px] font-black uppercase tracking-widest text-gray-400">
+                Développement de l'article
+              </label>
+              <!-- prettier-ignore -->
+              {{ form.contenu|add_class:"credo-textarea" }}
+            </div>
+
+            <!-- Double Upload Grid -->
+            <div class="grid md:grid-cols-2 gap-6">
+              <!-- Upload Image -->
+              <div class="space-y-3">
+                <label class="block text-[11px] font-black uppercase tracking-widest text-gray-400">
+                  Image illustrative
+                </label>
+                <label
+                  class="relative flex flex-col items-center justify-center h-44 bg-blue-50/50 border-2 border-dashed border-blue-200/50 rounded-[2rem] cursor-pointer hover:bg-blue-50 transition-all group overflow-hidden">
+                  <div class="flex flex-col items-center justify-center py-6 text-center px-4">
+                    <div
+                      class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#19429b] shadow-sm mb-3 group-hover:scale-110 transition-transform">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 00-2 2z"
+                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </div>
+                    <p class="text-[9px] font-black uppercase tracking-widest text-[#19429b]">Format JPG/PNG</p>
+                  </div>
+                  <!-- prettier-ignore -->
+                  {{ form.image|add_class:"hidden" }}
+                </label>
+              </div>
+
+              <!-- Upload PDF -->
+              <div class="space-y-3">
+                <label class="block text-[11px] font-black uppercase tracking-widest text-gray-400">
+                  Document Technique (PDF)
+                </label>
+                <label
+                  class="relative flex flex-col items-center justify-center h-44 bg-orange-50/50 border-2 border-dashed border-orange-200/50 rounded-[2rem] cursor-pointer hover:bg-orange-50 transition-all group overflow-hidden">
+                  <div class="flex flex-col items-center justify-center py-6 text-center px-4">
+                    <div
+                      class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#F58634] shadow-sm mb-3 group-hover:scale-110 transition-transform">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </div>
+                    <p class="text-[9px] font-black uppercase tracking-widest text-[#F58634]">Max 10 Mo • PDF</p>
+                  </div>
+                  <!-- prettier-ignore -->
+                  {{ form.fichier_pdf|add_class:"hidden" }}
+                </label>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[#2ECC71]">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                      stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+                <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest italic">
+                  L'article sera vérifié par notre pôle expertise.
+                </p>
+              </div>
+
+              <button type="submit"
+                class="w-full md:w-auto bg-[#19429b] text-white px-12 py-5 rounded-full font-black uppercase tracking-widest hover:bg-[#F58634] shadow-xl shadow-[#19429b]/20 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group">
+                Publier l'Expertise
+                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

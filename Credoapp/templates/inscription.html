@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Inscription - Rejoindre la Communauté | Credo Mali{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-24 min-h-[90vh] flex items-center">
+  <div class="container mx-auto px-6">
+    <div class="max-w-xl mx-auto">
+
+      <!-- Form Card -->
+      <div class="bg-white rounded-[3rem] shadow-2xl shadow-[#19429b]/5 overflow-hidden relative">
+        <!-- Barre Dégradée Signature -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#19429b] via-[#F58634] to-[#2ECC71]"></div>
+
+        <div class="p-8 md:p-12">
+          <div class="mb-10 text-center">
+            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-[#19429b] mx-auto mb-6">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h1 class="text-3xl font-black text-[#19429b] uppercase tracking-tighter leading-tight mb-2">
+              Créer un <span class="text-[#F58634]">Compte</span>
+            </h1>
+            <p class="text-gray-400 font-bold uppercase tracking-widest text-[9px]">
+              Rejoignez l'élite du pôle expertise et innovation
+            </p>
+          </div>
+
+          <form method="post" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="space-y-2">
+              <label for="id_username"
+                class="block text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                Identifiant
+              </label>
+              <!-- prettier-ignore -->
+              {{ form.username|add_class:"credo-input" }}
+              {% if form.username.errors %}
+              <p class="text-[9px] font-bold text-red-500 mt-1 uppercase leading-tight">{{ form.username.errors.0 }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Email -->
+            <div class="space-y-2">
+              <label for="id_email" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                E-mail
+              </label>
+              <!-- prettier-ignore -->
+              {{ form.email|add_class:"credo-input" }}
+              {% if form.email.errors %}
+              <p class="text-[9px] font-bold text-red-500 mt-1 uppercase leading-tight">{{ form.email.errors.0 }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Password 1 -->
+            <div class="space-y-2">
+              <label for="id_password1"
+                class="block text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                Mot de passe
+              </label>
+              <!-- prettier-ignore -->
+              {{ form.password1|add_class:"credo-input" }}
+              {% if form.password1.errors %}
+              <p class="text-[9px] font-bold text-red-500 mt-1 uppercase leading-tight">{{ form.password1.errors.0 }}
+              </p>
+              {% endif %}
+            </div>
+
+            <!-- Password 2 -->
+            <div class="space-y-2">
+              <label for="id_password2"
+                class="block text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                Confirmation
+              </label>
+              <!-- prettier-ignore -->
+              {{ form.password2|add_class:"credo-input" }}
+              {% if form.password2.errors %}
+              <p class="text-[9px] font-bold text-red-500 mt-1 uppercase leading-tight">{{ form.password2.errors.0 }}
+              </p>
+              {% endif %}
+            </div>
+
+            <!-- Cible (Full width) -->
+            <div class="md:col-span-2 space-y-2">
+              <label for="id_cible" class="block text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">
+                Votre Profil
+              </label>
+              <div class="relative">
+                <!-- prettier-ignore -->
+                {{ form.cible|add_class:"credo-select" }}
+                <div class="absolute inset-y-0 right-5 flex items-center pointer-events-none text-[#19429b]">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+              </div>
+              {% if form.cible.errors %}
+              <p class="text-[9px] font-bold text-red-500 mt-1 uppercase leading-tight">{{ form.cible.errors.0 }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Submit Button (Full width) -->
+            <div class="md:col-span-2 pt-6">
+              <button type="submit"
+                class="w-full bg-[#19429b] text-white px-8 py-5 rounded-full font-black uppercase tracking-widest hover:bg-[#F58634] shadow-xl shadow-[#19429b]/20 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group">
+                Finaliser l'Inscription
+                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- Footer Link -->
+          <div class="mt-10 pt-8 border-t border-gray-50 text-center">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">
+              Déjà membre ?
+              <a href="{% url 'connexion' %}" class="text-[#19429b] hover:text-[#F58634] transition-colors ml-1">
+                Se connecter
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Link -->
+      <div class="mt-8 text-center">
+        <a href="{% url 'home' %}"
+          class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-[#19429b] transition-colors">
+          ← Retour à l'accueil
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

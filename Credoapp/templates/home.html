@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Accueil - Credo Mali{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="bg-[#0A3D62] text-white py-24 md:py-32 relative overflow-hidden">
+  <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#0A3D62] via-[#F58634] to-[#2ECC71]"></div>
+  <div class="absolute inset-0 opacity-10">
+    <svg class="w-full h-full" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path d="M0 100 C 20 0 50 0 100 100 Z" opacity="0.1"></path>
+    </svg>
+  </div>
+  <div class="container mx-auto text-center px-6 relative z-10">
+    <h1 class="text-4xl md:text-7xl font-black mb-8 uppercase tracking-tighter leading-tight">
+      Bienvenue chez<br><span class="text-[#F58634]">Credo Mali</span>
+    </h1>
+    <p class="text-xl md:text-2xl mb-12 text-blue-100 max-w-3xl mx-auto font-medium">
+      Orientation professionnelle • Renforcement de capacités • Business Intelligence
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-6">
+      <a href="{% url 'formations' %}"
+        class="bg-[#F58634] text-white font-black px-10 py-5 rounded-2xl shadow-2xl hover:bg-[#F59E0B] transform hover:scale-105 transition-all uppercase tracking-widest text-lg">
+        Découvrir nos formations
+      </a>
+      <a href="#formations"
+        class="bg-white/10 backdrop-blur-md text-white border-2 border-white/20 font-black px-10 py-5 rounded-2xl hover:bg-white/20 transition-all uppercase tracking-widest text-lg">
+        En savoir plus
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Formations -->
+<section id="formations" class="container mx-auto px-6 py-24">
+  <div class="flex items-end justify-between mb-12">
+    <div>
+      <h2 class="text-4xl font-black text-[#0A3D62] uppercase tracking-tighter">Nos Formations</h2>
+      <p class="text-[#F58634] font-bold uppercase text-xs tracking-[0.3em] mt-2">Propulsez votre carrière</p>
+    </div>
+    <a href="{% url 'formations' %}"
+      class="hidden md:block text-[#0A3D62] font-black text-sm uppercase tracking-widest hover:translate-x-2 transition-transform">Voir
+      tout →</a>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-10">
+    {% for f in formations %}
+    <div class="relative group">
+      <a href="{% url 'formation_detail' f.pk %}"
+        class="card-hover block bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-gray-100 transition-all duration-500 h-full flex flex-col hover:-translate-y-2">
+        {% if f.image %}
+        <div class="h-56 overflow-hidden">
+          <img src="{{ f.image.url }}" alt="{{ f.titre }}"
+            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+        </div>
+        {% endif %}
+        <div class="p-8 flex-grow flex flex-col">
+          <h3
+            class="text-2xl font-black mb-3 text-[#0A3D62] group-hover:text-white transition-colors uppercase tracking-tight leading-tight">
+            {{ f.titre }}</h3>
+          <p class="text-gray-600 font-medium leading-relaxed group-hover:text-white/90 transition-colors flex-grow">
+            {{ f.description_courte|truncatewords:15 }}
+          </p>
+          <div class="mt-6 pt-6 border-t border-gray-100 group-hover:border-white/20">
+            <span class="text-2xl font-black text-[#F58634] group-hover:text-white transition-colors">
+              {% if f.prix %}{{ f.prix }} <span class="text-xs">FCFA</span>{% else %}Nous consulter{% endif %}
+            </span>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% empty %}
+    <p class="text-center col-span-3 text-gray-400 font-bold">Aucune formation disponible pour l’instant.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Événements -->
+<section id="evenements" class="bg-gray-50 px-6 py-24 border-y border-gray-100">
+  <div class="container mx-auto">
+    <div class="flex items-end justify-between mb-12">
+      <div>
+        <h2 class="text-4xl font-black text-[#0A3D62] uppercase tracking-tighter">Événements</h2>
+        <p class="text-[#2ECC71] font-bold uppercase text-xs tracking-[0.3em] mt-2">Moments stratégiques</p>
+      </div>
+      <a href="{% url 'evenements_list' %}"
+        class="hidden md:block text-[#0A3D62] font-black text-sm uppercase tracking-widest hover:translate-x-2 transition-transform">Calendrier
+        complet →</a>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-10">
+      {% for e in evenements %}
+      <div class="relative group">
+        <a href="{% url 'evenement_detail' e.pk %}"
+          class="card-hover block bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-gray-100 transition-all duration-500 h-full flex flex-col hover:-translate-y-2">
+          {% if e.image %}
+          <div class="relative h-56 overflow-hidden">
+            <img src="{{ e.image.url }}" alt="{{ e.titre }}"
+              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute top-4 right-4">
+              <span
+                class="bg-white/90 backdrop-blur text-[#0A3D62] text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
+                {{ e.date_debut|date:"d M Y" }}
+              </span>
+            </div>
+          </div>
+          {% endif %}
+          <div class="p-8 flex-grow flex flex-col">
+            <h3
+              class="text-2xl font-black mb-3 text-[#0A3D62] group-hover:text-white transition-colors uppercase tracking-tight leading-tight">
+              {{ e.titre }}</h3>
+            <div class="mt-auto flex items-center text-[#0A3D62] group-hover:text-white font-bold">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              </svg>
+              <span class="truncate">{{ e.lieu }}</span>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <p class="text-center col-span-3 text-gray-400 font-bold">Aucun événement prévu pour l’instant.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Articles -->
+<section id="articles" class="container mx-auto px-6 py-24">
+  <div class="flex items-end justify-between mb-12">
+    <div>
+      <h2 class="text-4xl font-black text-[#0A3D62] uppercase tracking-tighter">Blog Stratégique</h2>
+      <p class="text-[#0A3D62] font-bold uppercase text-xs tracking-[0.3em] mt-2">Dernières actualités</p>
+    </div>
+    <a href="{% url 'articles' %}"
+      class="hidden md:block text-[#0A3D62] font-black text-sm uppercase tracking-widest hover:translate-x-2 transition-transform">Lire
+      tout →</a>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-10">
+    {% for a in articles %}
+    <div class="relative group">
+      <a href="{% url 'article_detail' a.pk %}"
+        class="card-hover block bg-white rounded-3xl shadow-xl overflow-hidden border-2 border-gray-100 transition-all duration-500 h-full flex flex-col hover:-translate-y-2">
+        {% if a.image %}
+        <div class="h-56 overflow-hidden">
+          <img src="{{ a.image.url }}" alt="{{ a.titre }}"
+            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+        </div>
+        {% endif %}
+        <div class="p-8 flex-grow flex flex-col">
+          <h3
+            class="text-2xl font-black mb-3 text-[#0A3D62] group-hover:text-white transition-colors uppercase tracking-tight leading-tight">
+            {{ a.titre }}</h3>
+          <!-- prettier-ignore -->
+          <p class="text-gray-500 text-xs font-black uppercase tracking-widest mb-4 group-hover:text-white/80">Le
+            {{a.date_publication|date:"d M Y"}}</p>
+          <p class="text-gray-600 font-medium group-hover:text-white/90 line-clamp-3">
+            {{ a.contenu|truncatewords:20 }}
+          </p>
+        </div>
+      </a>
+    </div>
+    {% empty %}
+    <p class="text-center col-span-3 text-gray-400 font-bold">Aucun article pour le moment.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Témoignages -->
+<section id="temoins" class="bg-gray-50 px-6 py-24">
+  <div class="container mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-black text-[#0A3D62] uppercase tracking-tighter">Ils nous font confiance</h2>
+      <p class="text-[#F58634] font-bold uppercase text-xs tracking-[0.3em] mt-2">Le succès de nos partenaires</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-12">
+      {% for t in temoins %}
+      <div
+        class="bg-white p-12 rounded-[2.5rem] shadow-2xl border-2 border-gray-100 relative group hover:border-[#F58634] transition-all duration-500 transform hover:-translate-y-2">
+        <div class="absolute -top-10 left-1/2 -translate-x-1/2">
+          {% if t.photo %}
+          <div
+            class="w-24 h-24 p-1.5 bg-white rounded-3xl shadow-2xl group-hover:rotate-6 transition-transform duration-500">
+            <img src="{{ t.photo.url }}" alt="{{ t.nom }}" class="w-full h-full object-cover rounded-2xl">
+          </div>
+          {% else %}
+          <div
+            class="w-24 h-24 p-1.5 bg-white rounded-3xl shadow-2xl flex items-center justify-center text-[#0A3D62]/10 group-hover:rotate-6 transition-transform duration-500">
+            <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd">
+              </path>
+            </svg>
+          </div>
+          {% endif %}
+        </div>
+        <div class="mt-10 text-center">
+          <svg class="w-12 h-12 text-[#F58634]/10 mx-auto mb-8 group-hover:text-[#F58634]/20 transition-colors"
+            fill="currentColor" viewBox="0 0 32 32">
+            <path d="M10 8v8h6v-8h-6zm12 0v8h6v-8h-6z"></path>
+          </svg>
+          <p class="text-gray-700 italic mb-8 font-medium leading-relaxed text-lg">“{{ t.message }}”</p>
+          <div class="pt-8 border-t border-gray-100 group-hover:border-[#F58634]/20 transition-colors">
+            <p class="font-black text-[#0A3D62] uppercase tracking-widest">{{ t.nom }}</p>
+            <p class="text-[#F58634] text-xs font-black mt-2 uppercase tracking-widest opacity-70">{{ t.fonction }}</p>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center col-span-3 text-gray-400 font-bold">Pas encore de témoignages.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+<style>
+  /* Harmonisation des couleurs de survol (Bleu, Orange, Vert) */
+  div.relative.group:nth-child(3n+1) .card-hover:hover {
+    background-color: #0A3D62 !important;
+  }
+
+  div.relative.group:nth-child(3n+2) .card-hover:hover {
+    background-color: #F58634 !important;
+  }
+
+  div.relative.group:nth-child(3n+3) .card-hover:hover {
+    background-color: #2ECC71 !important;
+  }
+
+  /* Forcer le texte en blanc opaque au survol */
+  .card-hover:hover h3,
+  .card-hover:hover p,
+  .card-hover:hover div,
+  .card-hover:hover span,
+  .card-hover:hover svg {
+    color: white !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    opacity: 1 !important;
+  }
+
+  /* Fix pour les line-clamp et transitions texte */
+  .card-hover h3,
+  .card-hover p,
+  .card-hover span,
+  .card-hover div {
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
+{% endblock %}

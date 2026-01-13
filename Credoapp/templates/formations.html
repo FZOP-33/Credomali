@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- HEADER INSPIRANT (VISION CREDO) -->
+<section class="bg-[#0A3D62] text-white py-16 shadow-lg" style="background-color: #0A3D62 !important;">
+    <div class="container mx-auto px-6 text-center">
+        <!-- Titre Principal -->
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight tracking-tight text-white"
+            style="color: white !important;">
+            Ne choisis pas ta carrière au hasard.
+        </h1>
+
+        <!-- Sous-titre -->
+        <p class="text-xl md:text-2xl text-white max-w-3xl mx-auto mb-10 font-medium" style="color: white !important;">
+            Credo Mali t'accompagne : Orientation, Compétences et Business Intelligent.
+        </p>
+
+        <!-- Barre de recherche -->
+        <form method="get"
+            class="max-w-2xl mx-auto flex items-stretch shadow-2xl rounded-xl overflow-hidden ring-4 ring-white/20 h-14 bg-white">
+            <div class="flex-grow flex items-center px-4 bg-white">
+                <span class="text-gray-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </span>
+                <input type="text" name="search" value="{{ search_query }}"
+                    placeholder="Quelle formation cherchez-vous ?"
+                    class="w-full pl-3 pr-4 h-full text-black placeholder-gray-400 font-semibold focus:outline-none bg-white"
+                    style="color: black !important;">
+            </div>
+            <button type="submit"
+                class="bg-[#0A3D62] text-white px-10 h-full font-bold text-lg hover:bg-[#082f4d] transition-all flex items-center justify-center uppercase tracking-wider">
+                Chercher
+            </button>
+        </form>
+    </div>
+</section>
+
+<!-- CONTENU -->
+<section class="py-12 bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col lg:flex-row gap-8">
+
+            <!-- SIDEBAR FILTRES (AXES INTERVENTION) -->
+            <aside class="w-full lg:w-1/4">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden sticky top-6">
+                    <div class="bg-[#0A3D62] px-6 py-4">
+                        <h3 class="text-white font-bold text-lg uppercase tracking-wider flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h7"></path>
+                            </svg>
+                            Nos Domaines
+                        </h3>
+                    </div>
+
+                    <ul class="p-4 space-y-1">
+                        <li>
+                            <a href="?axe="
+                                class="flex items-center px-4 py-3 rounded-lg font-medium transition-colors {% if not selected_axe %}bg-gray-100 text-[#0A3D62] border-l-4 border-[#0A3D62]{% else %}text-gray-600 hover:bg-gray-50 hover:text-[#F58634]{% endif %}">
+                                <span class="w-6 text-center mr-2">📂</span>
+                                Tout voir
+                            </a>
+                        </li>
+                        {% for axe in axes %}
+                        <li>
+                            <a href="?axe={{ axe.slug }}"
+                                class="flex items-center px-4 py-3 rounded-lg font-medium transition-colors {% if selected_axe == axe.slug %}bg-gray-100 text-[#0A3D62] border-l-4 border-[#0A3D62]{% else %}text-gray-600 hover:bg-gray-50 hover:text-[#F58634]{% endif %}">
+                                <span class="w-6 text-center mr-2">
+                                    {% if axe.icone %}{{ axe.icone }}{% else %}🔹{% endif %}
+                                </span>
+                                {{ axe.nom }}
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="px-4 py-2 text-sm text-gray-500 italic">Aucun domaine défini</li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="p-4 mt-2 border-t border-gray-100 bg-gray-50">
+                        <p class="text-sm text-[#0A3D62] mb-3 font-medium">Besoin de conseils ?</p>
+                        <a href="{% url 'contact' %}"
+                            class="block w-full text-center bg-white border border-[#0A3D62] text-[#0A3D62] py-2 rounded font-bold text-sm hover:bg-[#0A3D62] hover:text-white transition-colors">
+                            Parler à un conseiller
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- LISTE FORMATIONS -->
+            <main class="w-full lg:w-3/4">
+
+                {% if selected_axe %}
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold text-[#0A3D62]">{{ selected_axe|title }}</h2>
+                    <p class="text-gray-600 font-medium">Découvrez nos formations expertes en {{ selected_axe }}.</p>
+                </div>
+                {% endif %}
+
+                {% if formations %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {% for f in formations %}
+                    <article
+                        class="card-hover bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full group transition-all duration-300">
+                        <!-- Image -->
+                        <div class="h-48 overflow-hidden relative bg-gray-200">
+                            {% if f.image %}
+                            <img src="{{ f.image.url }}" alt="{{ f.titre }}"
+                                class="w-full h-full object-cover transition-transform duration-500 transform group-hover:scale-105">
+                            {% else %}
+                            <div
+                                class="w-full h-full flex items-center justify-center text-gray-400 font-bold text-xl bg-gray-200">
+                                CREDO MALI</div>
+                            {% endif %}
+
+                            {% if f.type_formation %}
+                            <div
+                                class="absolute top-2 right-2 bg-white text-[#0A3D62] text-xs font-bold px-2 py-1 rounded shadow-md opacity-100">
+                                {{ f.type_formation.nom }}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Contenu -->
+                        <div class="p-6 flex-grow flex flex-col">
+                            {% if f.axe %}
+                            <span class="text-xs font-bold text-[#0A3D62] uppercase mb-1 axe-label opacity-100">
+                                {{ f.axe.nom }}
+                            </span>
+                            {% endif %}
+
+                            <h3 class="text-xl font-bold text-gray-900 mb-2 leading-tight">
+                                <a href="{% url 'formation_detail' f.pk %}" class="transition">{{ f.titre }}</a>
+                            </h3>
+
+                            <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow description-text opacity-100">
+                                {{ f.description_courte|truncatewords:20 }}
+                            </p>
+
+                            <!-- Infos Clés -->
+                            <div
+                                class="flex items-center text-xs text-gray-500 space-x-4 border-t border-gray-100 pt-4 mt-auto infos-cles opacity-100">
+                                {% if f.duree %}
+                                <span class="flex items-center">
+                                    <svg class="w-4 h-4 mr-1 text-gray-400 icon-svg" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    {{ f.duree }}
+                                </span>
+                                {% endif %}
+                                {% if f.lieu %}
+                                <span class="flex items-center">
+                                    <svg class="w-4 h-4 mr-1 text-gray-400 icon-svg" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                    {{ f.lieu }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- CTA -->
+                        <a href="{% url 'formation_detail' f.pk %}"
+                            class="cta-btn block text-center py-3 text-sm font-bold text-[#0A3D62] border-t border-gray-100 transition-colors">
+                            Voir le programme →
+                        </a>
+                    </article>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-20 bg-white rounded-xl shadow border border-gray-100">
+                    <div class="text-gray-300 text-6xl mb-4">🔍</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Aucune formation trouvée</h3>
+                    <p class="text-gray-500">Essayez de sélectionner une autre catégorie ou modifiez votre recherche.
+                    </p>
+                    <a href="{% url 'formations' %}"
+                        class="inline-block mt-4 text-[#0A3D62] font-semibold hover:underline">Voir toutes les
+                        formations</a>
+                </div>
+                {% endif %}
+
+            </main>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* LOGIQUE HOVER SOLIDE */
+    .card-hover {
+        transition: all 0.4s ease;
+    }
+
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 1er enfant : Vert (#10B981) */
+    .card-hover:nth-child(3n+1):hover {
+        background-color: #10B981 !important;
+    }
+
+    /* 2ème enfant : Orange (#F59E0B) */
+    .card-hover:nth-child(3n+2):hover {
+        background-color: #F59E0B !important;
+    }
+
+    /* 3ème enfant : Bleu (#0A3D62) */
+    .card-hover:nth-child(3n+3):hover {
+        background-color: #0A3D62 !important;
+    }
+
+    /* Forcer le texte en blanc opaque au survol */
+    .card-hover:hover h3,
+    .card-hover:hover h3 a,
+    .card-hover:hover p,
+    .card-hover:hover span,
+    .card-hover:hover .axe-label,
+    .card-hover:hover .description-text,
+    .card-hover:hover .cta-btn,
+    .card-hover:hover .infos-cles {
+        color: white !important;
+        opacity: 1 !important;
+    }
+
+    .card-hover:hover .icon-svg {
+        color: white !important;
+    }
+
+    .card-hover:hover .cta-btn {
+        background-color: rgba(255, 255, 255, 0.15);
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+</style>
+
+{% endblock %}

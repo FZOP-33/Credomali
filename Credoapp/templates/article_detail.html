@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ article.titre }} - Blog Stratégique | Credo Mali{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-24 min-h-[70vh] flex items-center">
+  <div class="container mx-auto px-6">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Bouton Retour Stylisé -->
+      <a href="{% url 'articles' %}"
+        class="inline-flex items-center gap-2 text-[#19429b] font-black uppercase tracking-widest text-[10px] mb-8 hover:text-[#F58634] transition-colors group">
+        <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Retour au blog
+      </a>
+
+      <!-- Article Card -->
+      <article class="bg-white rounded-[3rem] shadow-2xl shadow-[#19429b]/5 overflow-hidden relative">
+        <!-- Barre Dégradée Signature -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#19429b] via-[#F58634] to-[#2ECC71]"></div>
+
+        <!-- Header Image (Optionnel) -->
+        {% if article.image %}
+        <div class="h-80 md:h-[450px] overflow-hidden">
+          <img src="{{ article.image.url }}" alt="{{ article.titre }}" class="w-full h-full object-cover">
+        </div>
+        {% endif %}
+
+        <div class="p-8 md:p-16">
+          <!-- Article Metadata -->
+          <div class="flex flex-wrap items-center gap-4 mb-8">
+            <span
+              class="px-4 py-1.5 bg-blue-50 text-[#19429b] text-[10px] font-black uppercase tracking-[0.2em] rounded-xl flex items-center gap-2">
+              <span class="w-1.5 h-1.5 bg-[#19429b] rounded-full"></span> Excellence Stratégique
+            </span>
+            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+              <!-- prettier-ignore -->
+              Publié le {{ article.date_publication|date:"d M Y" }} par
+              <span class="text-[#F58634]">
+                {{ article.auteur }}
+              </span>
+            </span>
+          </div>
+
+          <!-- Titre Principal -->
+          <h1 class="text-3xl md:text-5xl font-black text-[#19429b] uppercase tracking-tighter leading-[1.1] mb-12">
+            {{ article.titre }}
+          </h1>
+
+          <!-- Contenu de l'article -->
+          <div class="prose prose-lg prose-blue max-w-none mb-16">
+            <div class="text-gray-700 font-medium leading-[1.8] space-y-6">
+              {{ article.contenu|linebreaks }}
+            </div>
+          </div>
+
+          <!-- Section PDF (Si existant) -->
+          {% if article.fichier_pdf %}
+          <div
+            class="p-8 bg-gray-50 rounded-[2rem] border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
+            <div class="flex items-center gap-6 text-center md:text-left">
+              <div
+                class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 shadow-sm border border-red-100">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-black text-[#19429b] uppercase tracking-tighter leading-none mb-2">Ressource
+                  Stratégique</h3>
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Documentation PDF Complète</p>
+              </div>
+            </div>
+
+            <a href="{{ article.fichier_pdf.url }}" target="_blank"
+              class="inline-flex items-center gap-3 bg-[#19429b] text-white px-8 py-4 rounded-full font-black uppercase tracking-widest hover:bg-[#F58634] shadow-xl shadow-[#19429b]/20 transition-all transform hover:-translate-y-1 active:scale-95 group">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              Télécharger
+            </a>
+          </div>
+          {% endif %}
+
+          <!-- Footer Signature -->
+          <div class="pt-12 border-t border-gray-50 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-[#19429b]/10 flex items-center justify-center text-[#19429b]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <p class="text-[10px] font-black uppercase text-[#19429b] tracking-[0.2em] leading-tight">
+                Publié par l'équipe Credo Mali <br><span class="text-gray-400">Pôle Expertise & Innovation</span>
+              </p>
+            </div>
+
+            <div class="flex items-center gap-4 p-4 bg-orange-50 rounded-2xl border border-orange-100/50">
+              <p class="text-[9px] font-black uppercase text-[#F58634] tracking-widest text-center">
+                Partagez votre expertise • Credo Mali
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

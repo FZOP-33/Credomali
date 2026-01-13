@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Publier un Témoignage - Impact | Credo Mali{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-24 min-h-[80vh] flex items-center">
+  <div class="container mx-auto px-6">
+    <div class="max-w-3xl mx-auto">
+
+      <!-- Bouton Retour Stylisé -->
+      <a href="{% url 'temoignages' %}"
+        class="inline-flex items-center gap-2 text-[#19429b] font-black uppercase tracking-widest text-[10px] mb-8 hover:text-[#F58634] transition-colors group">
+        <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Annuler et revenir aux témoignages
+      </a>
+
+      <!-- Form Card -->
+      <div class="bg-white rounded-[3rem] shadow-2xl shadow-[#19429b]/5 overflow-hidden relative">
+        <!-- Barre Dégradée Signature -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#19429b] via-[#F58634] to-[#2ECC71]"></div>
+
+        <div class="p-8 md:p-12">
+          <div class="mb-12 text-center md:text-left">
+            <h1 class="text-3xl md:text-4xl font-black text-[#19429b] uppercase tracking-tighter leading-tight mb-4">
+              Partager mon <span class="text-[#F58634]">Expérience</span>
+            </h1>
+            <p class="text-gray-500 font-bold uppercase tracking-widest text-[10px]">
+              Votre voix contribue au rayonnement de l'excellence professionnelle au Mali
+            </p>
+          </div>
+
+          <form method="post" enctype="multipart/form-data" class="space-y-8">
+            {% csrf_token %}
+
+            <div class="grid md:grid-cols-2 gap-8">
+              <!-- Champ Nom -->
+              <div class="space-y-3">
+                <label for="id_nom" class="block text-[11px] font-black uppercase tracking-widest text-gray-400">
+                  Nom Complet
+                </label>
+                <div class="relative group">
+                  <!-- prettier-ignore -->
+                  {{ form.nom|add_class:"credo-input" }}
+                </div>
+              </div>
+
+              <!-- Champ Fonction -->
+              <div class="space-y-3">
+                <label for="id_fonction" class="block text-[11px] font-black uppercase tracking-widest text-gray-400">
+                  Fonction / Poste
+                </label>
+                <div class="relative group">
+                  <!-- prettier-ignore -->
+                  {{ form.fonction|add_class:"credo-input" }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Champ Message -->
+            <div class="space-y-3">
+              <label for="id_message" class="block text-[11px] font-black uppercase tracking-widest text-gray-400">
+                Votre Témoignage
+              </label>
+              <!-- prettier-ignore -->
+              {{ form.message|add_class:"credo-textarea" }}
+            </div>
+
+            <!-- Photo Upload -->
+            <div class="space-y-3">
+              <label class="block text-[11px] font-black uppercase tracking-widest text-gray-400">
+                Photo (Recommandé)
+              </label>
+              <label
+                class="relative flex flex-col items-center justify-center h-44 bg-blue-50/50 border-2 border-dashed border-blue-200/50 rounded-[2rem] cursor-pointer hover:bg-blue-50 transition-all group overflow-hidden">
+                <div class="flex flex-col items-center justify-center py-6 text-center px-4">
+                  <div
+                    class="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#19429b] shadow-sm mb-3 group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </div>
+                  <p class="text-[10px] font-black uppercase tracking-widest text-[#19429b]">Cliquez pour ajouter une
+                    photo</p>
+                  <p class="text-[8px] font-bold text-gray-400 uppercase tracking-widest mt-1">Format carré recommandé
+                  </p>
+                </div>
+                <!-- prettier-ignore -->
+                {{ form.photo|add_class:"hidden" }}
+              </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-8 flex flex-col items-center gap-6">
+              <button type="submit"
+                class="w-full bg-[#19429b] text-white px-12 py-5 rounded-full font-black uppercase tracking-widest hover:bg-[#F58634] shadow-xl shadow-[#19429b]/20 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 group">
+                Envoyer mon Témoignage
+                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </button>
+
+              <div class="flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-[#2ECC71] animate-pulse"></div>
+                <p class="text-[9px] font-black uppercase text-gray-400 tracking-widest">
+                  Témoignages vérifiés • Credo Mali
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}À propos - Réussite Stratégique | Credo Mali{% endblock %}
+
+{% block content %}
+<!-- Hero Section À Propos -->
+<section class="relative bg-white pt-24 pb-16 overflow-hidden">
+  <div class="absolute top-0 right-0 w-1/4 h-full bg-blue-50/30 skew-x-12 transform origin-bottom"></div>
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-black text-[#19429b] uppercase tracking-tighter mb-8">
+        Bâtir l'Avenir par <span class="text-[#F58634]">l'Expertise</span>
+      </h1>
+      <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white mb-16">
+        <img src="{% static 'Credoapp/image/apropos.jpeg' %}" alt="Credo Mali Expertise"
+          class="w-full h-[400px] md:h-[550px] object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#19429b]/80 via-transparent to-transparent"></div>
+        <div class="absolute bottom-10 left-10 right-10 text-left text-white">
+          <p class="text-[10px] font-black uppercase tracking-[0.3em] text-[#F58634] mb-3">Notre Vision</p>
+          <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight">Transformer le paysage industriel malien
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Valeurs & Mission / Contexte -->
+<section class="bg-gray-50 py-24">
+  <div class="container mx-auto px-6">
+    <div class="grid lg:grid-cols-2 gap-16 items-center mb-24">
+      <div class="space-y-8">
+        <div
+          class="inline-block px-4 py-1.5 bg-blue-50 text-[#19429b] text-[10px] font-black uppercase tracking-[0.2em] rounded-xl border border-blue-100">
+          Notre Contexte</div>
+        <h2 class="text-3xl md:text-4xl font-black text-[#19429b] uppercase tracking-tighter leading-tight">
+          Répondre aux défis d'une <span class="text-[#F58634]">économie en mutation</span>
+        </h2>
+        <p class="text-lg text-gray-600 font-medium leading-relaxed">
+          Dans un environnement marqué par la montée du digital et des besoins croissants en compétences pratiques,
+          <span class="text-[#19429b] font-bold">Credo Mali</span> se positionne comme une initiative locale ambitieuse.
+          Notre objectif est de rendre la formation professionnelle accessible, contextualisée et directement utile aux
+          jeunes, commerçants et PME du marché malien.
+        </p>
+        <div class="p-6 bg-white rounded-2xl border-l-4 border-l-[#F58634] shadow-sm italic text-gray-700 font-medium">
+          “Ne choisis pas ta carrière au hasard. Credo Mali t’accompagne dans ton futur.”
+        </div>
+      </div>
+
+      <div class="grid gap-6">
+        <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <h4 class="font-black text-[#19429b] uppercase text-xs tracking-widest mb-3">Stratégie Digitale</h4>
+          <p class="text-sm text-gray-500 font-bold leading-relaxed">Déployer une approche progressive adaptée à la
+            réalité locale pour une visibilité ciblée.</p>
+        </div>
+        <div class="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <h4 class="font-black text-[#19429b] uppercase text-xs tracking-widest mb-3">Partenariats Stratégiques</h4>
+          <p class="text-sm text-gray-500 font-bold leading-relaxed">Établir des liens forts avec les acteurs de terrain
+            pour un ancrage réel.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Les 3 Piliers -->
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-black text-[#19429b] uppercase tracking-tighter">Nos 3 Piliers d'Excellence</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8 mb-24">
+      <div
+        class="group p-10 bg-white rounded-[2.5rem] shadow-xl border border-gray-100 hover:border-[#19429b] transition-all duration-500">
+        <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-[#19429b] mb-8">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 20l-5.447-2.724A2 2 0 013 15.483V6a2 2 0 011.236-1.841l7-3a2 2 0 011.528 0l7 3A2 2 0 0121 6v9.483a2 2 0 01-1.236 1.841L15 20m-5 4v-4a1 1 0 011-1h2a1 1 0 011 1v4" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-black text-[#19429b] uppercase tracking-tighter mb-4">Un Guide d'Orientation</h3>
+        <p class="text-gray-600 font-medium leading-relaxed">Accompagnement stratégique pour les bacheliers et diplômés
+          (Licence/Master) dans le choix de leur carrière.</p>
+      </div>
+
+      <div
+        class="group p-10 bg-white rounded-[2.5rem] shadow-xl border border-gray-100 hover:border-[#F58634] transition-all duration-500">
+        <div class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center text-[#F58634] mb-8">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-black text-[#19429b] uppercase tracking-tighter mb-4">Centre de Renforcement</h3>
+        <p class="text-gray-600 font-medium leading-relaxed">Développement des Soft Skills : prise de parole,
+          communication, leadership et confiance en soi.</p>
+      </div>
+
+      <div
+        class="group p-10 bg-white rounded-[2.5rem] shadow-xl border border-gray-100 hover:border-[#2ECC71] transition-all duration-500">
+        <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-[#2ECC71] mb-8">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-black text-[#19429b] uppercase tracking-tighter mb-4">Formateur en Business</h3>
+        <p class="text-gray-600 font-medium leading-relaxed">Apprendre à vendre au-delà du simple boostage publicitaire.
+          Maîtriser la Business Intelligence.</p>
+      </div>
+    </div>
+
+    <!-- Les Cibles -->
+    <div class="bg-white rounded-[3rem] p-12 border border-gray-100 shadow-2xl relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-[#2ECC71]/5 rounded-bl-full"></div>
+      <div class="grid lg:grid-cols-3 gap-12 items-center">
+        <div>
+          <h2 class="text-4xl font-black text-[#2ECC71] uppercase tracking-tighter mb-4">Les Cibles</h2>
+          <p class="text-gray-500 font-bold uppercase text-[10px] tracking-widest">À qui nous adressons-nous ?</p>
+        </div>
+        <div class="lg:col-span-2 grid sm:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <span
+                class="w-8 h-8 rounded-full bg-blue-50 text-[#19429b] flex items-center justify-center shrink-0 font-black">1</span>
+              <div>
+                <h5 class="font-black text-[#19429b] uppercase text-xs mb-1">Jeunes bacheliers / Étudiants</h5>
+                <p class="text-sm text-gray-500 font-medium">Besoin d’accompagnement pour choisir leur future carrière.
+                </p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span
+                class="w-8 h-8 rounded-full bg-orange-50 text-[#F58634] flex items-center justify-center shrink-0 font-black">2</span>
+              <div>
+                <h5 class="font-black text-[#19429b] uppercase text-xs mb-1">Professionnels</h5>
+                <p class="text-sm text-gray-500 font-medium">Volonté d'améliorer confiance, communication et leadership.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div class="flex items-start gap-4">
+              <span
+                class="w-8 h-8 rounded-full bg-green-50 text-[#2ECC71] flex items-center justify-center shrink-0 font-black">3</span>
+              <div>
+                <h5 class="font-black text-[#19429b] uppercase text-xs mb-1">Commerçants & Entrepreneurs</h5>
+                <p class="text-sm text-gray-500 font-medium">Apprendre à mieux vendre et réussir durablement leur
+                  business.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Finalité Section -->
+<section class="py-24 bg-white relative overflow-hidden">
+  <div class="container mx-auto px-6">
+    <div class="bg-[#19429b] rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#19429b] to-[#0A3D62]"></div>
+      <div class="relative z-10 max-w-2xl mx-auto">
+        <p class="text-[11px] font-black uppercase tracking-[0.4em] text-[#F58634] mb-6">Notre Finalité</p>
+        <h3 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-8 leading-tight">
+          Attirer, Fédérer et Réussir Ensemble
+        </h3>
+        <p class="text-blue-100/70 text-lg font-medium leading-relaxed mb-10">
+          Générer des inscriptions de qualité et construire une communauté de confiance pour transformer durablement
+          l'économie malienne.
+        </p>
+        <a href="{% url 'inscription' %}"
+          class="inline-block bg-[#F58634] text-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-white hover:text-[#19429b] transition-all transform hover:scale-105 active:scale-95 shadow-xl">
+          S'inscrire Maintenant
+        </a>
+      </div>
+      <!-- Décorations fond -->
+      <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+      <div class="absolute -left-20 -top-20 w-64 h-64 bg-[#F58634]/10 rounded-full blur-3xl"></div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+
+# Node.js
+node_modules/
+npm-debug.log
+
+# System
+.DS_Store

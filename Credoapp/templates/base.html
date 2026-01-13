@@ -1,0 +1,289 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Credo Mali{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/output.css' %}">
+  <script src="https://cdn.tailwindcss.com"></script> <!-- Optionnel si output.css est complet -->
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Formulaires Premium */
+    .credo-input {
+      width: 100%;
+      background-color: #f9fafb;
+      border: 2px solid #f3f4f6;
+      border-radius: 1rem;
+      /* 2xl */
+      padding: 1rem 1.5rem;
+      color: #19429b;
+      font-weight: 700;
+      transition: all 0.3s;
+      outline: none;
+    }
+
+    .credo-input:focus {
+      border-color: #19429b;
+      background-color: white;
+    }
+
+    .credo-input::placeholder {
+      color: #d1d5db;
+    }
+
+    .credo-textarea {
+      width: 100%;
+      background-color: #f9fafb;
+      border: 2px solid #f3f4f6;
+      border-radius: 1.5rem;
+      /* 3xl */
+      padding: 1.25rem 1.5rem;
+      color: #374151;
+      /* gray-700 */
+      font-weight: 500;
+      line-height: 1.625;
+      transition: all 0.3s;
+      outline: none;
+      min-height: 150px;
+    }
+
+    .credo-textarea:focus {
+      border-color: #19429b;
+      background-color: white;
+    }
+
+    .credo-textarea::placeholder {
+      color: #d1d5db;
+    }
+
+    .credo-select {
+      width: 100%;
+      background-color: #f9fafb;
+      border: 2px solid #f3f4f6;
+      border-radius: 1rem;
+      padding: 1rem 1.25rem;
+      color: #19429b;
+      font-weight: 700;
+      transition: all 0.3s;
+      outline: none;
+      appearance: none;
+    }
+
+    .credo-select:focus {
+      border-color: #19429b;
+      background-color: white;
+    }
+
+    .nav-link {
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #F58634;
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .bg-credo-blue {
+      background-color: #0A3D62;
+    }
+
+    .text-credo-blue {
+      color: #0A3D62;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
+
+  <!-- HEADER -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+    <div class="container mx-auto xl:px-12 px-6 py-4 flex justify-between items-center">
+
+      <!-- Logo -->
+      <a href="{% url 'home' %}" class="flex items-center space-x-3 group shrink-0">
+        <div
+          class="relative overflow-hidden rounded-lg shadow-sm border border-gray-100 transition-transform duration-300 group-hover:scale-105">
+          <img src="{% static 'Credoapp/image/Credo.jpeg' %}" alt="Logo" class="h-10 md:h-12 w-auto object-contain">
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-black text-credo-blue uppercase tracking-tighter leading-none">Credo Mali</span>
+          <span class="text-[10px] font-bold text-[#F58634] uppercase tracking-[0.2em] mt-1">Orientation &
+            Compétences</span>
+        </div>
+      </a>
+
+      <!-- Menu Desktop -->
+      <nav class="hidden lg:flex items-center gap-x-8">
+        <a href="{% url 'home' %}"
+          class="nav-link text-[13px] font-bold text-credo-blue uppercase tracking-wider">Accueil</a>
+
+        <!-- Dropdown Services -->
+        <div class="relative group">
+          <button
+            class="nav-link text-[13px] font-bold text-credo-blue uppercase tracking-wider flex items-center gap-1">
+            Services <svg class="w-3 h-3 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path d="M19 9l-7 7-7-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div
+            class="absolute hidden group-hover:block bg-white shadow-xl rounded-xl mt-2 w-52 border border-gray-100 p-2">
+            <a href="{% url 'formations' %}"
+              class="block px-4 py-2 text-sm font-semibold text-credo-blue hover:bg-orange-50 hover:text-[#F58634] rounded-lg">Formations</a>
+            <a href="{% url 'galerie' %}?categorie=conference"
+              class="block px-4 py-2 text-sm font-semibold text-credo-blue hover:bg-orange-50 hover:text-[#F58634] rounded-lg">Conférences</a>
+            <a href="{% url 'webinaires_list' %}"
+              class="block px-4 py-2 text-sm font-semibold text-credo-blue hover:bg-orange-50 hover:text-[#F58634] rounded-lg">Webinaires</a>
+          </div>
+        </div>
+
+        <a href="{% url 'evenements_list' %}"
+          class="nav-link text-[13px] font-bold text-credo-blue uppercase tracking-wider">Événements</a>
+        <a href="{% url 'articles' %}"
+          class="nav-link text-[13px] font-bold text-credo-blue uppercase tracking-wider">Blog</a>
+        <a href="{% url 'apropos' %}" class="nav-link text-[13px] font-bold text-credo-blue uppercase tracking-wider">À
+          Propos</a>
+        <a href="{% url 'contact' %}"
+          class="nav-link text-[13px] font-bold text-credo-blue uppercase tracking-wider">Contact</a>
+
+        <div class="h-6 w-px bg-gray-200 mx-2"></div>
+
+        {% if user.is_authenticated %}
+        <div class="flex items-center gap-4">
+          <span class="text-xs font-bold text-gray-500 uppercase">{{ user.username }}</span>
+          <a href="{% url 'logout' %}"
+            class="px-4 py-2 border border-red-100 text-red-600 text-[11px] font-bold uppercase rounded-full hover:bg-red-50 transition-all">Déconnexion</a>
+        </div>
+        {% else %}
+        <a href="{% url 'connexion' %}"
+          class="text-[12px] font-bold text-credo-blue uppercase hover:text-[#F58634]">Connexion</a>
+        <a href="{% url 'inscription' %}"
+          class="px-6 py-2.5 bg-credo-blue text-white text-[12px] font-bold uppercase rounded-full hover:bg-[#F58634] shadow-md transition-all hover:-translate-y-0.5">S'inscrire</a>
+        {% endif %}
+      </nav>
+
+      <!-- Mobile Toggle -->
+      <button id="mobile-menu-toggle" class="lg:hidden p-2 text-credo-blue">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="flex-grow">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-credo-blue text-white pt-16 pb-8">
+    <div class="container mx-auto px-6 xl:px-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+
+        <!-- Col 1: About -->
+        <div class="space-y-6">
+          <div class="flex items-center space-x-3">
+            <div class="p-2 bg-white rounded">
+              <img src="{% static 'Credoapp/image/Credo.jpeg' %}" class="h-10 w-auto" alt="Credo">
+            </div>
+            <span class="text-xl font-black uppercase text-white">Credo Mali</span>
+          </div>
+          <p class="text-blue-100/70 text-sm leading-relaxed">
+            Votre boussole au Mali pour l'orientation, le renforcement de capacités et la Business Intelligence.
+            Bâtissons votre réussite.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#"
+              class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#F58634] transition-all">f</a>
+            <a href="#"
+              class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#F58634] transition-all">in</a>
+          </div>
+        </div>
+
+        <!-- Col 2: Liens Rapides -->
+        <div>
+          <h4 class="text-[#F58634] font-bold uppercase text-xs tracking-widest mb-6 border-b border-white/10 pb-2">
+            Navigation</h4>
+          <ul class="space-y-4">
+            <li><a href="{% url 'formations' %}" class="text-sm text-blue-100/80 hover:text-white transition-colors">Nos
+                Formations</a></li>
+            <li><a href="{% url 'evenements_list' %}"
+                class="text-sm text-blue-100/80 hover:text-white transition-colors">Calendrier Événements</a></li>
+            <li><a href="{% url 'articles' %}" class="text-sm text-blue-100/80 hover:text-white transition-colors">Blog
+                & Actualités</a></li>
+            <li><a href="{% url 'apropos' %}" class="text-sm text-blue-100/80 hover:text-white transition-colors">À
+                Propos</a></li>
+            <li><a href="{% url 'contact' %}"
+                class="text-sm text-blue-100/80 hover:text-white transition-colors">Contactez-nous</a></li>
+            <li><a href="{% url 'temoignages' %}"
+                class="text-sm text-blue-100/80 hover:text-white transition-colors">Témoignages</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Services (Supprimé car non cohérent pour le moment) -->
+        <div class="hidden lg:block">
+          <h4 class="text-[#F58634] font-bold uppercase text-xs tracking-widest mb-6 border-b border-white/10 pb-2">
+            Engagement</h4>
+          <ul class="space-y-4">
+            <li><a href="{% url 'temoignages' %}"
+                class="text-sm text-blue-100/80 hover:text-white transition-colors">Impact Social</a></li>
+            <li><a href="{% url 'galerie' %}" class="text-sm text-blue-100/80 hover:text-white transition-colors">Notre
+                Galerie</a></li>
+            <li><a href="{% url 'evenements_list' %}"
+                class="text-sm text-blue-100/80 hover:text-white transition-colors">Événements</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Contact -->
+        <div>
+          <h4 class="text-[#F58634] font-bold uppercase text-xs tracking-widest mb-6 border-b border-white/10 pb-2">
+            Contact</h4>
+          <ul class="space-y-4 text-sm text-blue-100/80">
+            <li class="flex items-start gap-3"><span>📍</span> Bamako, Mali, Quartier d'Affaires</li>
+            <li class="flex items-center gap-3"><span>📞</span> +223 76 02 29 10</li>
+            <li class="flex items-center gap-3"><span>✉️</span> contact@credomali.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Copyright -->
+      <div
+        class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-blue-100/30">
+        <p class="text-xs font-medium">© 2026 Credo Mali. Tous droits réservés.</p>
+        <div class="flex gap-6">
+          <a href="#" class="text-[10px] uppercase font-bold hover:text-white transition-colors">Mentions Légales</a>
+          <a href="#" class="text-[10px] uppercase font-bold hover:text-white transition-colors">Confidentialité</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Menu Mobile -->
+  <script>
+    const btn = document.getElementById('mobile-menu-toggle');
+    // Ajouter ici la logique JS pour ouvrir/fermer le menu mobile
+  </script>
+</body>
+
+</html>

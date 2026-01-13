@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog & Stratégies - Credo Mali{% endblock %}
+
+{% block content %}
+<!-- Hero Section Articles -->
+<section class="relative bg-white pt-24 pb-16 overflow-hidden">
+  <div class="absolute top-0 right-0 w-1/3 h-full bg-blue-50/30 skew-x-12 transform origin-bottom"></div>
+
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="max-w-3xl">
+      <h1 class="text-4xl md:text-6xl font-black text-[#19429b] uppercase tracking-tighter mb-6 leading-none">
+        Le Blog de <br><span class="text-[#F58634]">l'Excellence</span>
+      </h1>
+      <p class="text-lg text-gray-600 font-medium leading-relaxed mb-10 max-w-2xl">
+        Articles stratégiques, conseils d'experts et actualités sur le marché professionnel au Mali. Restez informé des
+        dernières opportunités de carrière.
+      </p>
+
+      {% if user.is_authenticated %}
+      <a href="{% url 'publier_article' %}"
+        class="inline-flex items-center gap-3 bg-[#19429b] text-white px-8 py-4 rounded-full font-black uppercase tracking-widest hover:bg-[#F58634] shadow-xl shadow-[#19429b]/20 transition-all transform hover:-translate-y-1 active:scale-95 group">
+        <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path
+            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Publier un article
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- Grid Articles -->
+<section class="bg-gray-50 py-20 min-h-screen">
+  <div class="container mx-auto px-6">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {% for a in articles %}
+      <article class="group relative flex flex-col h-full">
+        <a href="{% url 'article_detail' a.pk %}"
+          class="flex flex-col h-full bg-white rounded-[2.5rem] overflow-hidden border border-gray-100 shadow-sm transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative">
+
+          <!-- Badge Couleur sur Hover (Tricolore) -->
+          <div
+            class="absolute inset-x-0 bottom-0 h-1.5 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left 
+            {% if forloop.counter0|divisibleby:3 %}bg-[#19429b]{% elif forloop.counter|divisibleby:2 %}bg-[#F58634]{% else %}bg-[#2ECC71]{% endif %}">
+          </div>
+
+          <!-- Image Container -->
+          <div class="relative h-64 overflow-hidden">
+            {% if a.image %}
+            <img src="{{ a.image.url }}" alt="{{ a.titre }}"
+              class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+            {% else %}
+            <div class="w-full h-full bg-[#19429b]/5 flex items-center justify-center">
+              <svg class="w-16 h-16 text-[#19429b]/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 00-2 2z"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            {% endif %}
+
+            {% if a.is_pdf %}
+            <div
+              class="absolute top-4 right-4 bg-red-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 uppercase tracking-widest z-20">
+              <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span> Document PDF
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Content -->
+          <div class="p-8 flex flex-col flex-grow">
+            <div class="flex items-center gap-3 mb-4">
+              <span
+                class="text-[10px] font-black uppercase tracking-widest text-[#F58634] bg-orange-50 px-2 py-1 rounded">Expertise</span>
+              <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                <!-- prettier-ignore -->
+                {{ a.date_publication|date:"d M Y" }}
+              </span>
+            </div>
+
+            <h3
+              class="text-xl font-black text-[#19429b] uppercase tracking-tighter leading-tight mb-4 group-hover:text-[#F58634] transition-colors">
+              {{ a.titre }}
+            </h3>
+
+            <div class="text-gray-600 text-sm font-medium leading-relaxed line-clamp-3 mb-8">
+              {% if not a.is_pdf %}
+              {{ a.contenu|truncatewords:25 }}
+              {% else %}
+              Ressort technique et documentation détaillée disponible au format PDF pour consultation approfondie.
+              {% endif %}
+            </div>
+
+            <!-- Footer Card -->
+            <div class="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[#19429b] text-[10px] font-black uppercase">
+                  {{ a.auteur|slice:":2" }}
+                </div>
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  {{ a.auteur }}
+                </span>
+              </div>
+
+              <div
+                class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-[#19429b] group-hover:bg-[#19429b] group-hover:text-white transition-all transform group-hover:translate-x-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M13 7l5 5m0 0l-5 5m5-5H6" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </a>
+      </article>
+      {% empty %}
+      <div class="col-span-full py-20 text-center bg-white rounded-[3rem] border-2 border-dashed border-gray-100">
+        <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-10 h-10 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v12a2 2 0 01-2 2z" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 9v4m0 4h.01" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <p class="text-gray-400 font-black uppercase tracking-widest">Aucun article publié pour le moment.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

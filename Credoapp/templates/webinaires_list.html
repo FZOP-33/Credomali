@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- HERO SECTION: Prochain Webinaire -->
+{% if next_webinaire %}
+<section class="relative bg-gray-900 text-white py-20 overflow-hidden">
+    <!-- Image de fond floutée -->
+    <div class="absolute inset-0 z-0">
+        {% if next_webinaire.background_image %}
+        <img src="{{ next_webinaire.background_image.url }}" class="w-full h-full object-cover opacity-40 blur-sm">
+        {% elif next_webinaire.image %}
+        <img src="{{ next_webinaire.image.url }}" class="w-full h-full object-cover opacity-40 blur-sm">
+        {% else %}
+        <div class="w-full h-full bg-gradient-to-r from-blue-900 to-gray-900"></div>
+        {% endif %}
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10 text-center">
+        <span
+            class="inline-block bg-[#F58634] text-white text-[10px] font-black px-4 py-1.5 rounded-full mb-6 uppercase tracking-[0.2em] shadow-lg shadow-[#F58634]/20 animate-pulse">
+            Prochain Direct
+        </span>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">{{ next_webinaire.titre }}</h1>
+        <p class="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">{{ next_webinaire.description|truncatewords:20 }}</p>
+
+        <!-- Compte à rebours -->
+        <div id="countdown" class="flex justify-center space-x-4 mb-8 text-center"
+            data-date="{{ next_webinaire.date|date:'Y-m-d H:i:s' }}" data-live-link="{{ next_webinaire.lien }}">
+            <!-- Slots standard (jours, heures, min, sec) -->
+            <div id="slots-timer" class="flex space-x-4">
+                <div class="bg-white/10 backdrop-blur-md rounded-lg p-4 w-24">
+                    <span id="days" class="text-3xl font-bold block">00</span>
+                    <span class="text-xs uppercase">Jours</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-lg p-4 w-24">
+                    <span id="hours" class="text-3xl font-bold block">00</span>
+                    <span class="text-xs uppercase">Heures</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-lg p-4 w-24">
+                    <span id="minutes" class="text-3xl font-bold block">00</span>
+                    <span class="text-xs uppercase">Min</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md rounded-lg p-4 w-24">
+                    <span id="seconds" class="text-3xl font-bold text-red-500 block">00</span>
+                    <span class="text-xs uppercase">Sec</span>
+                </div>
+            </div>
+            <div id="direct-access" class="hidden animate-bounce">
+                <a href="{{ next_webinaire.lien }}" target="_blank"
+                    class="bg-red-600 text-white font-black px-10 py-5 rounded-2xl shadow-2xl flex items-center gap-3 uppercase tracking-widest">
+                    <span class="relative flex h-3 w-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+                    </span>
+                    Accéder au Direct
+                </a>
+            </div>
+        </div>
+
+        <a href="{% url 'inscription_webinaire' next_webinaire.pk %}"
+            class="inline-block bg-[#F58634] text-white font-black px-10 py-5 rounded-2xl shadow-2xl hover:bg-[#F59E0B] transform hover:scale-105 transition-all uppercase tracking-widest text-lg">
+            M'inscrire gratuitement
+        </a>
+    </div>
+</section>
+{% else %}
+<!-- Fallback si pas de prochain webinaire -->
+<section class="bg-blue-600 text-white py-16 text-center">
+    <h1 class="text-4xl font-bold mb-4">Nos Webinaires & Conférences</h1>
+    <p class="text-xl">Retrouvez nos événements passés et à venir.</p>
+</section>
+{% endif %}
+
+
+<!-- TABS & LISTE -->
+<section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-6">
+
+        <!-- Tabs Navigation -->
+        <div class="flex justify-center mb-10 space-x-6 border-b border-gray-200">
+            <button onclick="switchTab('upcoming')" id="tab-upcoming"
+                class="pb-4 px-4 text-lg font-semibold border-b-2 border-blue-600 text-blue-600 focus:outline-none transition-colors">
+                À venir ({{ upcoming|length }})
+            </button>
+            <button onclick="switchTab('past')" id="tab-past"
+                class="pb-4 px-4 text-lg font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 focus:outline-none transition-colors">
+                Replays ({{ past|length }})
+            </button>
+        </div>
+
+        <!-- UPCOMING LIST -->
+        <div id="content-upcoming" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for webinaire in upcoming %}
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full border border-gray-100">
+                <div class="h-48 overflow-hidden relative group">
+                    {% if webinaire.image %}
+                    <img src="{{ webinaire.image.url }}" alt="{{ webinaire.titre }}"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    {% else %}
+                    <div class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">Pas d'image
+                    </div>
+                    {% endif %}
+                    <div class="absolute top-4 right-4 flex flex-col gap-2 items-end">
+                        <span
+                            class="bg-white/95 backdrop-blur text-[#19429b] text-[10px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest shadow-lg">
+                            {{ webinaire.date|date:"d M" }}
+                        </span>
+                        <span
+                            class="bg-[#19429b] text-white text-[9px] font-bold px-2 py-1 rounded-md uppercase tracking-widest">
+                            {{ webinaire.date|date:"H:i" }}
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 line-clamp-2">{{ webinaire.titre }}</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-3 flex-grow">{{ webinaire.description }}</p>
+
+                    <!-- Intervenants Mini -->
+                    {% if webinaire.intervenants.all %}
+                    <div class="flex -space-x-2 my-4">
+                        {% for speaker in webinaire.intervenants.all %}
+                        {% if speaker.photo %}
+                        <img class="w-8 h-8 rounded-full border-2 border-white" src="{{ speaker.photo.url }}"
+                            title="{{ speaker.nom }}">
+                        {% else %}
+                        <div class="w-8 h-8 rounded-full border-2 border-white bg-gray-300 flex items-center justify-center text-xs font-bold text-gray-600"
+                            title="{{ speaker.nom }}">{{ speaker.nom|first }}</div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <a href="{% url 'webinaire_detail' webinaire.pk %}"
+                        class="block w-full text-center bg-[#19429b] text-white font-black py-3 rounded-xl hover:bg-[#F58634] transition-all shadow-lg shadow-[#19429b]/10 uppercase tracking-widest text-[10px]">
+                        Détails & Inscription
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-10 text-gray-500">
+                <p>Aucun autre webinaire programmé pour le moment.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- PAST LIST -->
+        <div id="content-past" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for webinaire in past %}
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full opacity-90 hover:opacity-100">
+                <div class="h-48 overflow-hidden relative">
+                    {% if webinaire.image %}
+                    <img src="{{ webinaire.image.url }}"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                    {% else %}
+                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">🎥</div>
+                    {% endif %}
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                        <svg class="w-12 h-12 text-white opacity-80" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="p-6 flex-grow">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800">{{ webinaire.titre }}</h3>
+                    <p class="text-sm text-gray-500 mb-4">Diffusé le {{ webinaire.date|date:"d F Y" }}</p>
+                    <a href="#" class="text-blue-600 font-medium hover:underline">Voir le replay →</a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center py-10 text-gray-500">
+                <p>Aucun replay disponible.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<script>
+    // TABS LOGIC
+    function switchTab(tab) {
+        const contentUpcoming = document.getElementById('content-upcoming');
+        const contentPast = document.getElementById('content-past');
+        const tabUpcoming = document.getElementById('tab-upcoming');
+        const tabPast = document.getElementById('tab-past');
+
+        if (tab === 'upcoming') {
+            contentUpcoming.classList.remove('hidden');
+            contentPast.classList.add('hidden');
+
+            tabUpcoming.classList.add('text-blue-600', 'border-blue-600');
+            tabUpcoming.classList.remove('text-gray-500', 'border-transparent');
+
+            tabPast.classList.remove('text-blue-600', 'border-blue-600');
+            tabPast.classList.add('text-gray-500', 'border-transparent');
+        } else {
+            contentUpcoming.classList.add('hidden');
+            contentPast.classList.remove('hidden');
+
+            tabPast.classList.add('text-blue-600', 'border-blue-600');
+            tabPast.classList.remove('text-gray-500', 'border-transparent');
+
+            tabUpcoming.classList.remove('text-blue-600', 'border-blue-600');
+            tabUpcoming.classList.add('text-gray-500', 'border-transparent');
+        }
+    }
+
+    // COUNTDOWN LOGIC
+    document.addEventListener('DOMContentLoaded', () => {
+        const countdownEl = document.getElementById('countdown');
+        if (!countdownEl) return;
+
+        // Django format "Y-m-d H:i:s" compatible
+        const targetDate = new Date(countdownEl.dataset.date).getTime();
+
+        const interval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                clearInterval(interval);
+                countdownEl.innerHTML = '<div class="animate-pulse bg-red-600 text-white px-8 py-4 rounded-xl font-black text-xl tracking-tighter shadow-2xl">EN DIRECT MAINTENANT</div>';
+                return;
+            }
+
+            // Si moins de 15 minutes (900000 ms)
+            if (distance < 900000) {
+                const slots = document.getElementById('slots-timer');
+                const direct = document.getElementById('direct-access');
+                const mainBtn = document.querySelector('a[href*="inscription"]');
+                if (slots) slots.classList.add('hidden');
+                if (direct) direct.classList.remove('hidden');
+                if (mainBtn) mainBtn.classList.add('hidden');
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Mise à jour sécurisée des éléments s'ils existent
+            const d = document.getElementById('days');
+            const h = document.getElementById('hours');
+            const m = document.getElementById('minutes');
+            const s = document.getElementById('seconds');
+            if (d) d.innerText = String(days).padStart(2, '0');
+            if (h) h.innerText = String(hours).padStart(2, '0');
+            if (m) m.innerText = String(minutes).padStart(2, '0');
+            if (s) s.innerText = String(seconds).padStart(2, '0');
+        }, 1000);
+    });
+</script>
+
+{% endblock %}
